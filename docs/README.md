@@ -21,7 +21,13 @@ Open safari:
 
 ## Windows
 
+Fresh start:
+
 ![](win/init.png)
+
+Open notepad and type some nonsense:
+
+![](win/notepad.png)
 
 ## Ubuntu
 

@@ -91,6 +91,19 @@ function Open-NotepadAndType {
     [System.Windows.Forms.SendKeys]::SendWait($Text)
 }
 
+function Open-BrowserAndNavigate {
+    param (
+        [string]$Url
+    )
+
+    Start-Process "msedge.exe" $Url
+    Start-Sleep -Seconds 5 # Give the browser some time to open and navigate
+}
+
+# Open-BrowserAndNavigate -Url "https://www.example.com"
+
+## ---- the stuff ------ ##
+
 Take-Screenshot -FileName "init.png"
 
 Set-ScreenResolution
@@ -99,4 +112,8 @@ Take-Screenshot -FileName "4k.png"
 
 Open-NotepadAndType -Text "Follow the white rabbit"
 Take-Screenshot -FileName "notepad.png"
+
+Open-BrowserAndNavigate -Url "https://www.microsoft.com/en-gb/"
+start-Sleep -Seconds 5
+Take-Screenshot -FileName "browser.png"
 
