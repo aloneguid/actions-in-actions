@@ -45,3 +45,22 @@ jobs:
         with:
           name: screenshot-macos
           path: screenshot.png
+
+  screenshot-ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get install -y scrot
+
+      - name: Take Screenshot
+        run: scrot screenshot.png
+
+      - name: Upload Screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot-ubuntu
+          path: screenshot.png
