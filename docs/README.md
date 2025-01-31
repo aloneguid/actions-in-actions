@@ -14,13 +14,17 @@ Open maps app:
 
 ![](mac/maps.png)
 
+Open safari:
+
+![](mac/safari.png)
+
 
 ## Windows
 
-![](screenshot-win.png)
+![](win/init.png)
 
 ## Ubuntu
 
 it's boring
 
-![](screenshot-ubuntu.png)
+![](ubuntu/init.png)
