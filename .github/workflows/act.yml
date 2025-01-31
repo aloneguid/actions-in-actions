@@ -51,6 +51,7 @@ jobs:
       - name: Install and run asciirain
         run: |
           brew install cmatrix
+          export TERM=xterm-256color
           cmatrix
 
       - name: Take Screenshot
