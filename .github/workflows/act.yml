@@ -36,8 +36,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Open Maps
+        run: open -a Maps
+
       - name: Take Screenshot
         run: |
+          sleep 5 # Give Maps some time to open
           screencapture -x screenshot.png
 
       - name: Upload Screenshot
