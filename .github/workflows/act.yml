@@ -13,83 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Take Screenshot
+      - name: Run PowerShell Script
         run: |
-          Add-Type -AssemblyName System.Windows.Forms
-          $bounds = [System.Windows.Forms.SystemInformation]::VirtualScreen
-          $bitmap = New-Object Drawing.Bitmap $bounds.Width, $bounds.Height
-          $graphics = [Drawing.Graphics]::FromImage($bitmap)
-          $graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.Size)
-          $screenshotPath = "init.png"
-          $bitmap.Save($screenshotPath, [Drawing.Imaging.ImageFormat]::Png)
-
-
-      - name: Change Screen Resolution
-        run: |
-          Add-Type -TypeDefinition @"
-          using System;
-          using System.Runtime.InteropServices;
-          public class User32 {
-              [DllImport("user32.dll")]
-              public static extern int ChangeDisplaySettings(ref DEVMODE devMode, int flags);
-              [StructLayout(LayoutKind.Sequential)]
-              public struct DEVMODE {
-                  public const int CCHDEVICENAME = 32;
-                  public const int CCHFORMNAME = 32;
-                  [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHDEVICENAME)]
-                  public string dmDeviceName;
-                  public short dmSpecVersion;
-                  public short dmDriverVersion;
-                  public short dmSize;
-                  public short dmDriverExtra;
-                  public int dmFields;
-                  public int dmPositionX;
-                  public int dmPositionY;
-                  public int dmDisplayOrientation;
-                  public int dmDisplayFixedOutput;
-                  public short dmColor;
-                  public short dmDuplex;
-                  public short dmYResolution;
-                  public short dmTTOption;
-                  public short dmCollate;
-                  [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHFORMNAME)]
-                  public string dmFormName;
-                  public short dmLogPixels;
-                  public short dmBitsPerPel;
-                  public int dmPelsWidth;
-                  public int dmPelsHeight;
-                  public int dmDisplayFlags;
-                  public int dmDisplayFrequency;
-                  public int dmICMMethod;
-                  public int dmICMIntent;
-                  public int dmMediaType;
-                  public int dmDitherType;
-                  public int dmReserved1;
-                  public int dmReserved2;
-                  public int dmPanningWidth;
-                  public int dmPanningHeight;
-              }
-          }
-          "@
-          $devMode = New-Object User32+DEVMODE
-          $devMode.dmSize = [System.Runtime.InteropServices.Marshal]::SizeOf($devMode)
-          $devMode.dmPelsWidth = 1024
-          $devMode.dmPelsHeight = 768
-          $devMode.dmFields = 0x80000 | 0x100000
-          [User32]::ChangeDisplaySettings([ref]$devMode, 0)
-
-      - name: Take Screenshot
-        run: |
-          Add-Type -AssemblyName System.Windows.Forms
-          $bounds = [System.Windows.Forms.SystemInformation]::VirtualScreen
-          $bitmap = New-Object Drawing.Bitmap $bounds.Width, $bounds.Height
-          $graphics = [Drawing.Graphics]::FromImage($bitmap)
-          $graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.Size)
-          $screenshotPath = "4k.png"
-          $bitmap.Save($screenshotPath, [Drawing.Imaging.ImageFormat]::Png)
-
-
-
+          .\windows.ps1
+        shell: pwsh
+    
       - name: Upload Screenshot
         uses: actions/upload-artifact@v4
         with:
