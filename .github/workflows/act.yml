@@ -1,0 +1,30 @@
+name: Take Screenshot
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  screenshot:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Take Screenshot
+        run: |
+          Add-Type -AssemblyName System.Windows.Forms
+          $bounds = [System.Windows.Forms.SystemInformation]::VirtualScreen
+          $bitmap = New-Object Drawing.Bitmap $bounds.Width, $bounds.Height
+          $graphics = [Drawing.Graphics]::FromImage($bitmap)
+          $graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.Size)
+          $screenshotPath = "screenshot.png"
+          $bitmap.Save($screenshotPath, [Drawing.Imaging.ImageFormat]::Png)
+
+      - name: Upload Screenshot
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshot
+          path: screenshot.png
