@@ -54,16 +54,22 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: sudo apt-get install -y scrot xvfb
+        run: sudo apt-get install -y scrot xvfb xterm
 
       - name: Start Xvfb
         run: |
           export DISPLAY=:99
           Xvfb :99 -screen 0 1024x768x24 &
 
+      - name: Start xterm
+        run: |
+          export DISPLAY=:99
+          xterm &
+
       - name: Take Screenshot
         run: |
           export DISPLAY=:99
+          sleep 5 # Give xterm some time to start
           scrot screenshot.png
 
       - name: Upload Screenshot
