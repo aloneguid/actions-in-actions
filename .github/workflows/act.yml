@@ -6,12 +6,12 @@ on:
       - master
 
 jobs:
-  screenshot:
+  screenshot-windows:
     runs-on: windows-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Take Screenshot
         run: |
@@ -26,5 +26,22 @@ jobs:
       - name: Upload Screenshot
         uses: actions/upload-artifact@v4
         with:
-          name: screenshot
+          name: screenshot-windows
+          path: screenshot.png
+
+  screenshot-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Take Screenshot
+        run: |
+          screencapture -x screenshot.png
+
+      - name: Upload Screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot-macos
           path: screenshot.png
