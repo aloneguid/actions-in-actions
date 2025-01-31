@@ -72,7 +72,7 @@ function Set-ScreenResolution {
     $devMode.dmSize = [System.Runtime.InteropServices.Marshal]::SizeOf($devMode)
     $devMode.dmPelsWidth = $Width
     $devMode.dmPelsHeight = $Height
-    $devMode.dmFields = 0x80000 | 0x100000
+    $devMode.dmFields = (0x80000 -bor 0x100000)
     [User32]::ChangeDisplaySettings([ref]$devMode, 0)
 }
 
