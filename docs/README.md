@@ -29,6 +29,10 @@ Open notepad and type some nonsense:
 
 ![](win/notepad.png)
 
+Open browser:
+
+![](win/browser.png)
+
 ## Ubuntu
 
 it's boring
