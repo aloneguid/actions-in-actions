@@ -54,10 +54,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: sudo apt-get install -y scrot
+        run: sudo apt-get install -y scrot xvfb
+
+      - name: Start Xvfb
+        run: |
+          export DISPLAY=:99
+          Xvfb :99 -screen 0 1024x768x24 &
 
       - name: Take Screenshot
-        run: scrot screenshot.png
+        run: |
+          export DISPLAY=:99
+          scrot screenshot.png
 
       - name: Upload Screenshot
         uses: actions/upload-artifact@v4
