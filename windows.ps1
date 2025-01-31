@@ -81,4 +81,6 @@ function Set-ScreenResolution {
 
 Take-Screenshot -FileName "init.png"
 Set-ScreenResolution
+# wait for the screen to change resolution
+Start-Sleep -Seconds 5
 Take-Screenshot -FileName "4k.png"
