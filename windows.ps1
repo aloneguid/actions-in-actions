@@ -79,8 +79,24 @@ function Set-ScreenResolution {
 # Example usage:
 # Set-ScreenResolution -Width 3840 -Height 2160
 
+function Open-NotepadAndType {
+    param (
+        [string]$Text
+    )
+
+    Start-Process notepad
+    Start-Sleep -Seconds 2 # Give Notepad some time to open
+
+    Add-Type -AssemblyName System.Windows.Forms
+    [System.Windows.Forms.SendKeys]::SendWait($Text)
+}
+
 Take-Screenshot -FileName "init.png"
+
 Set-ScreenResolution
-# wait for the screen to change resolution
 Start-Sleep -Seconds 5
 Take-Screenshot -FileName "4k.png"
+
+Open-NotepadAndType -Text "Follow the white rabbit"
+Take-Screenshot -FileName "notepad.png"
+
