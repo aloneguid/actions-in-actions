@@ -20,14 +20,14 @@ jobs:
           $bitmap = New-Object Drawing.Bitmap $bounds.Width, $bounds.Height
           $graphics = [Drawing.Graphics]::FromImage($bitmap)
           $graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.Size)
-          $screenshotPath = "screenshot.png"
+          $screenshotPath = "init.png"
           $bitmap.Save($screenshotPath, [Drawing.Imaging.ImageFormat]::Png)
 
       - name: Upload Screenshot
         uses: actions/upload-artifact@v4
         with:
-          name: screenshot-windows
-          path: screenshot.png
+          name: win
+          path: "*.png"
 
   screenshot-macos:
     runs-on: macos-latest
@@ -48,16 +48,13 @@ jobs:
           sleep 5 # Give Maps some time to open
           screencapture -x maps.png
 
-      - name: Install and run asciirain
-        run: |
-          brew install cmatrix
-          export TERM=xterm-256color
-          cmatrix
+      - name: Open Safari
+        run: open -a Safari
 
       - name: Take Screenshot
         run: |
-          sleep 5
-          screencapture -x rain.png
+          sleep 5 # Give Safari some time to open
+          screencapture -x safari.png
 
       - name: Upload Screenshots
         uses: actions/upload-artifact@v4
@@ -89,10 +86,10 @@ jobs:
         run: |
           export DISPLAY=:99
           sleep 5 # Give xterm some time to start
-          scrot screenshot.png
+          scrot init.png
 
       - name: Upload Screenshot
         uses: actions/upload-artifact@v4
         with:
-          name: screenshot-ubuntu
-          path: screenshot.png
+          name: ubuntu
+          path: "*.png"
