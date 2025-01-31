@@ -36,19 +36,33 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Take Screenshot
+        run: |
+          screencapture -x init.png
+
       - name: Open Maps
         run: open -a Maps
 
       - name: Take Screenshot
         run: |
           sleep 5 # Give Maps some time to open
-          screencapture -x screenshot.png
+          screencapture -x maps.png
 
-      - name: Upload Screenshot
+      - name: Install and run asciirain
+        run: |
+          brew install cmatrix
+          cmatrix
+
+      - name: Take Screenshot
+        run: |
+          sleep 5
+          screencapture -x rain.png
+
+      - name: Upload Screenshots
         uses: actions/upload-artifact@v4
         with:
-          name: screenshot-macos
-          path: screenshot.png
+          name: macos
+          path: "*.png"
 
   screenshot-ubuntu:
     runs-on: ubuntu-latest
